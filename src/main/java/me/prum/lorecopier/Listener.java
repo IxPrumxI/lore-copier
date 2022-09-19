@@ -10,8 +10,6 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 public class Listener {
@@ -21,13 +19,11 @@ public class Listener {
         ClientRegistry.registerKeyBinding(key);
     }
 
-    @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event){
         handleInventoryEvent(false);
     }
 
-    @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onGuiKeyInput(GuiScreenEvent.KeyboardInputEvent.Post event){
         handleInventoryEvent(Keyboard.isKeyDown(key.getKeyCode()));
