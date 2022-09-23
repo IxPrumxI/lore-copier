@@ -30,6 +30,7 @@ public class Listener {
     }
 
     private void handleInventoryEvent(boolean bypass) {
+        if(Minecraft.getMinecraft().theWorld == null) return;
         if(isLooping) return;
         if(!key.isPressed() && !bypass) return;
         isLooping = true;
