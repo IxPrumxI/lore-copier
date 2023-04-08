@@ -17,8 +17,8 @@ import org.lwjgl.glfw.GLFW;
 public class Listener {
     @Mod.EventBusSubscriber(modid = LoreCopierMod.MODID, value = Dist.CLIENT)
     public static class ForgeEventBus {
-        public static KeyMapping inventory = new KeyMapping("Copy inventory", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_HOME, "Lore Copier");
-        public static KeyMapping one = new KeyMapping("Copy one", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_END, "Lore Copier");
+        public static KeyMapping inventory = new KeyMapping("Copy inventory", KeyConflictContext.UNIVERSAL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_HOME, "Lore Copier");
+        public static KeyMapping one = new KeyMapping("Copy one", KeyConflictContext.UNIVERSAL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_END, "Lore Copier");
 
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event){
