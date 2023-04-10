@@ -24,33 +24,33 @@ public class Listener {
 
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event){
-            if(inventory.consumeClick()) {
-                if(Minecraft.getInstance().player == null) return;
+            if(event.getKey() == inventory.getKey().getValue() && event.getAction() == GLFW.GLFW_PRESS) {
+                if (Minecraft.getInstance().player == null) return;
                 String url = LoreProcesser.processInventory(Minecraft.getInstance().player.getInventory());
 
-                if(url.equals("Error")) {
+                if (url.equals("Error")) {
                     Minecraft.getInstance().player.sendSystemMessage(Component.literal("Something went wrong."));
                 } else {
                     Minecraft.getInstance().player.sendSystemMessage(Component.literal("Click here to view!").setStyle(
                             Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url))
                     ));
                 }
-            } else if (one.consumeClick()) {
-                if(Minecraft.getInstance().player == null) return;
+            } else if (event.getKey() == one.getKey().getValue() && event.getAction() == GLFW.GLFW_PRESS) {
+                if (Minecraft.getInstance().player == null) return;
                 String url = LoreProcesser.processOne(Minecraft.getInstance().player.getMainHandItem());
 
-                if(url.equals("Error")) {
+                if (url.equals("Error")) {
                     Minecraft.getInstance().player.sendSystemMessage(Component.literal("Something went wrong."));
                 } else {
                     Minecraft.getInstance().player.sendSystemMessage(Component.literal("Click here to view!").setStyle(
                             Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url))
                     ));
                 }
-            } else if (container.consumeClick()) {
-                if(Minecraft.getInstance().player == null) return;
+            } else if (event.getKey() == container.getKey().getValue() && event.getAction() == GLFW.GLFW_PRESS) {
+                if (Minecraft.getInstance().player == null) return;
                 String url = LoreProcesser.processContainer(Minecraft.getInstance().player.containerMenu);
 
-                if(url.equals("Error")) {
+                if (url.equals("Error")) {
                     Minecraft.getInstance().player.sendSystemMessage(Component.literal("Something went wrong."));
                 } else {
                     Minecraft.getInstance().player.sendSystemMessage(Component.literal("Click here to view!").setStyle(
