@@ -1,6 +1,7 @@
 package me.prum.lorecopier;
 
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import nl.kyllian.enums.Expire;
@@ -27,6 +28,27 @@ public class LoreProcesser {
         List<String> loreArray = new ArrayList<>();
         for (int i = 0; i < inventory.getContainerSize(); i++) {
             ItemStack itemStack = inventory.getItem(i);
+            if(itemStack.getCount() == 0 || itemStack.isEmpty() || itemStack.getItem().equals(Items.AIR)) {
+                continue;
+            }
+            JSONObject itemObject = new JSONObject();
+
+            itemObject.put("nbt", itemStack.serializeNBT().toString());
+            itemObject.put("hovername", itemStack.getHoverName().getString());
+            itemObject.put("displayname", itemStack.getDisplayName().getString());
+            itemObject.put("slot", i);
+
+            loreArray.add(itemObject.toString());
+        }
+
+        String lore = "[" + String.join(",", loreArray) + "]";
+        return upload(lore);
+    }
+
+    public static String processContainer(AbstractContainerMenu container) {
+        List<String> loreArray = new ArrayList<>();
+        for (int i = 0; i < container.slots.size(); i++) {
+            ItemStack itemStack = container.slots.get(i).getItem();
             if(itemStack.getCount() == 0 || itemStack.isEmpty() || itemStack.getItem().equals(Items.AIR)) {
                 continue;
             }

@@ -20,6 +20,8 @@ public class Listener {
         public static KeyMapping inventory = new KeyMapping("Copy inventory", KeyConflictContext.UNIVERSAL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_HOME, "Lore Copier");
         public static KeyMapping one = new KeyMapping("Copy one", KeyConflictContext.UNIVERSAL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_END, "Lore Copier");
 
+        public static KeyMapping container = new KeyMapping("Copy container", KeyConflictContext.UNIVERSAL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_UP, "Lore Copier");
+
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event){
             if(inventory.consumeClick()) {
@@ -44,6 +46,17 @@ public class Listener {
                             Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url))
                     ));
                 }
+            } else if (container.consumeClick()) {
+                if(Minecraft.getInstance().player == null) return;
+                String url = LoreProcesser.processContainer(Minecraft.getInstance().player.containerMenu);
+
+                if(url.equals("Error")) {
+                    Minecraft.getInstance().player.sendSystemMessage(Component.literal("Something went wrong."));
+                } else {
+                    Minecraft.getInstance().player.sendSystemMessage(Component.literal("Click here to view!").setStyle(
+                            Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url))
+                    ));
+                }
             }
         }
     }
@@ -54,6 +67,7 @@ public class Listener {
         public static void onKeyRegistry(RegisterKeyMappingsEvent event){
             event.register(ForgeEventBus.inventory);
             event.register(ForgeEventBus.one);
+            event.register(ForgeEventBus.container);
         }
     }
 }
